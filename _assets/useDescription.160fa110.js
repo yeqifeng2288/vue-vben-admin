@@ -1,0 +1,1 @@
+import{cV as s,r as e,f as t,cX as n}from"./index.b140c207.js";function o(o){if(!s())throw new Error("Please put useDescription function in the setup function!");const r=e(null),c=e(!1);return[function(s){t(c)&&n()||(r.value=s,o&&s.setDescProps(o),c.value=!0)},{setDescProps:s=>{t(r).setDescProps(s)}}]}export{o as u};
