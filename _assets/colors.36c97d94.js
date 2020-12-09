@@ -1,0 +1,1 @@
+import{Z as e}from"./index.dc2474c5.js";var r=e("success","processing","error","default","warning"),a=e("pink","red","yellow","orange","cyan","green","blue","purple","geekblue","magenta","volcano","gold","lime");export{a as P,r as a};

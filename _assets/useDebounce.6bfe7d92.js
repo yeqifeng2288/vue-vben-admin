@@ -1,0 +1,1 @@
+import{bn as n}from"./index.dc2474c5.js";function e(e,c,o={}){return n(e,c,Object.assign(o,{debounce:!0}))}export{e as u};
