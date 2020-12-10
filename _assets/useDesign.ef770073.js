@@ -1,0 +1,1 @@
+import"./index.b2563c25.js";import{u as r}from"./useAppContext.768f6a4b.js";function e(e){const p=r();return{prefixCls:`${p.prefixCls}-${e}`,prefixVar:p.prefixCls}}export{e as u};
