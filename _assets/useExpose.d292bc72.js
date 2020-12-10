@@ -1,1 +1,0 @@
-import{aS as o}from"./index.dc2474c5.js";function s(s){const c=o();c&&Object.assign(c.proxy,s)}export{s as u};
