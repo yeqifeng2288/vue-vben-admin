@@ -1,0 +1,1 @@
+import{c as t,u as n}from"./useContext.2506cc4d.js";const o=Symbol();function c(n){return t(n,o)}function r(){return n(o)}export{c,r as u};
