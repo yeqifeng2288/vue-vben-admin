@@ -1,0 +1,1 @@
+import{cK as r}from"./index.2a9ceb8a.js";import{h as a,s,c as o}from"./_stringToArray.943e7f6c.js";var e,i=(e="toUpperCase",function(i){i=r(i);var t=a(i)?s(i):void 0,c=t?t[0]:i.charAt(0),n=t?o(t,1).join(""):i.slice(1);return c[e]()+n});export{i as u};
