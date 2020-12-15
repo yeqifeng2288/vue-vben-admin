@@ -1,0 +1,1 @@
+import{aq as a}from"./index.acbb87a5.js";function e(e,n,o={}){return a(e,n,Object.assign(o,{debounce:!0}))}export{e as u};
