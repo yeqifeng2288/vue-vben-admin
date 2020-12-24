@@ -34,5 +34,14 @@ export const LoginRoute: AppRouteRecordRaw = {
   },
 };
 
+export const LoginOidcRoute: AppRouteRecordRaw = {
+  path: '/loginoidc',
+  name: 'LoginOidc',
+  component: () => import('/@/views/sys/login/LoginOidc.vue'),
+  meta: {
+    title: t('routes.basic.loginoidc'),
+  },
+};
+
 // 基础路由 不用权限
-export const basicRoutes = [LoginRoute, RootRoute, REDIRECT_ROUTE];
+export const basicRoutes = [LoginOidcRoute, LoginRoute, RootRoute, REDIRECT_ROUTE];

@@ -9,7 +9,7 @@ import { getToken } from '/@/utils/auth';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/constant';
 // import { RootRoute } from '../routes/index';
 
-const LOGIN_PATH = PageEnum.BASE_LOGIN;
+const LOGIN_PATH = PageEnum.BASE_LOGINOIDC;
 
 const whitePathList: PageEnum[] = [LOGIN_PATH];
 
