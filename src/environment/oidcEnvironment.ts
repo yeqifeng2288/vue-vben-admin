@@ -9,7 +9,7 @@ export const reinventAppBase = 'http://localhost:3200';
 export const oidcEnvironment: UserManagerSettings = {
   authority: `${idpBase}`,
   client_id: 'AppCore_Reinvent_App',
-  redirect_uri: `${reinventAppBase}/`,
+  redirect_uri: `${reinventAppBase}/sigin-oidc`, // 下面两个信息必须与服务端一直。
   silent_redirect_uri: `${reinventAppBase}/redirect-silentrenew`,
   scope: `email openid profile role phone address AppCore`,
   response_type: 'id_token token',
