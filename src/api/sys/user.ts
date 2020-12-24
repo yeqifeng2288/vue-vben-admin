@@ -6,6 +6,7 @@ import {
   GetUserInfoByUserIdModel,
 } from './model/userModel';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
+import { OpenIdConnectService } from '/@/oidc/openIdConnectService';
 
 enum Api {
   Login = '/login',
@@ -17,6 +18,9 @@ enum Api {
  * @description: user login api
  */
 export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
+  console.log('尝试登录');
+  var connect = new OpenIdConnectService();
+  connect.triggerSignIn();
   return defHttp.request<LoginResultModel>(
     {
       url: Api.Login,
