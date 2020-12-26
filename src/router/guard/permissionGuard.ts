@@ -11,7 +11,7 @@ import { PAGE_NOT_FOUND_ROUTE } from '/@/router/constant';
 
 const LOGIN_PATH = PageEnum.BASE_LOGINOIDC;
 
-const whitePathList: PageEnum[] = [LOGIN_PATH];
+const whitePathList: PageEnum[] = [LOGIN_PATH, PageEnum.BASE_LOGINOIDC, PageEnum.BASE_SIGNINOIDC];
 
 export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {

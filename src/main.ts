@@ -15,6 +15,7 @@ import { isDevMode, isProdMode, isUseMock } from '/@/utils/env';
 import '/@/design/index.less';
 
 import '/@/locales/index';
+import { setStartUp } from './startUp';
 
 const app = createApp(App);
 
@@ -51,5 +52,9 @@ if (isDevMode()) {
 if (isProdMode() && isUseMock()) {
   setupProdMockServer();
 }
+
+// 启动管理注入。
+setStartUp(app);
+
 // Used to share app instances in other modules
 setApp(app);

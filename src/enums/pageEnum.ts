@@ -1,8 +1,12 @@
 export enum PageEnum {
   // basic login path
   BASE_LOGIN = '/login',
-  // basic login path
-  BASE_LOGINOIDC = '/loginoidc',
+
+  // oidc登录地址。
+  BASE_LOGINOIDC = '/login-oidc',
+
+  // oidc登录回调地址。
+  BASE_SIGNINOIDC = '/signin-oidc',
   // basic home path
   BASE_HOME = '/home',
   // error page path

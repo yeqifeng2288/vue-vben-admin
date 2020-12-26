@@ -7,6 +7,9 @@ import { PageEnum } from '/@/enums/pageEnum';
 
 import { t } from '/@/hooks/web/useI18n';
 
+import SigninOidc from '/@/views/sys/login/SigninOidc.vue';
+import LoginOidc from '/@/views/sys/login/LoginOidc.vue';
+
 const routeModuleList: AppRouteModule[] = [];
 
 Object.keys(modules).forEach((key) => {
@@ -35,13 +38,22 @@ export const LoginRoute: AppRouteRecordRaw = {
 };
 
 export const LoginOidcRoute: AppRouteRecordRaw = {
-  path: '/loginoidc',
+  path: '/login-oidc',
   name: 'LoginOidc',
-  component: () => import('/@/views/sys/login/LoginOidc.vue'),
+  component: LoginOidc,
   meta: {
-    title: t('routes.basic.loginoidc'),
+    title: t('routes.basic.login'),
+  },
+};
+
+export const SiginOidcRoute: AppRouteRecordRaw = {
+  path: '/signin-oidc',
+  name: 'SigninOidc',
+  component: () => SigninOidc,
+  meta: {
+    title: t('routes.basic.siginoidc'),
   },
 };
 
 // 基础路由 不用权限
-export const basicRoutes = [LoginOidcRoute, LoginRoute, RootRoute, REDIRECT_ROUTE];
+export const basicRoutes = [SiginOidcRoute, LoginOidcRoute, LoginRoute, RootRoute, REDIRECT_ROUTE];

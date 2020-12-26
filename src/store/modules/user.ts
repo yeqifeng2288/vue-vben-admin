@@ -22,7 +22,6 @@ import { setLocal, getLocal, getSession, setSession } from '/@/utils/helper/pers
 import { useProjectSetting } from '/@/hooks/setting';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
-import { OpenIdConnectService } from '/@/oidc/openIdConnectService';
 
 export type UserInfo = Omit<GetUserInfoByUserIdModel, 'roles'>;
 
@@ -46,8 +45,6 @@ function setCache(USER_INFO_KEY: string, info: any) {
 
 @Module({ namespaced: true, name: NAME, dynamic: true, store })
 class User extends VuexModule {
-  private oidcConnect: OpenIdConnectService = new OpenIdConnectService();
-
   // user info
   private userInfoState: UserInfo | null = null;
 
@@ -128,7 +125,7 @@ class User extends VuexModule {
   async getUserInfoAction({ userId }: GetUserInfoByUserIdParams) {
     const userInfo = await getUserInfoById({ userId });
     const { role } = userInfo;
-    const roleList = [role.value] as RoleEnum[];
+    const roleList = [role?.value] as RoleEnum[];
     this.commitUserInfoState(userInfo);
     this.commitRoleListState(roleList);
     return userInfo;
@@ -160,34 +157,25 @@ class User extends VuexModule {
   }
 
   /**
-   * @description: login
+   * @description: loginOidc
    */
   @Action
-  async loginOidc(
-    params: LoginParams & {
+  loginOidc(
+    userInfo: GetUserInfoByUserIdModel & {
       goHome?: boolean;
       mode?: ErrorMessageMode;
     }
-  ): Promise<GetUserInfoByUserIdModel | null> {
+  ): void {
     try {
-      this.oidcConnect.triggerSignIn();
-      // const { goHome = true, mode, ...loginParams } = params;
-      // const data = await loginApi(loginParams, mode);
-
-      // const { token, userId } = data;
-      // // get user info
-      // const userInfo = await this.getUserInfoAction({ userId });
-
-      // // save token
-      // this.commitTokenState(token);
-
-      // // const name = FULL_PAGE_NOT_FOUND_ROUTE.name;
-      // // name && router.removeRoute(name);
-      // goHome && (await router.replace(PageEnum.BASE_HOME));
-      // return userInfo;
-      return null;
+      //  将信息直接设置到缓存中。
+      var { role } = userInfo;
+      const roleList = [role?.value] as RoleEnum[];
+      this.commitUserInfoState(userInfo);
+      this.commitRoleListState(roleList);
+      var userToken = userInfo.userToken;
+      if (userToken) this.commitTokenState(userToken);
     } catch (error) {
-      return null;
+      console.log(error);
     }
   }
 }

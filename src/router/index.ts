@@ -1,7 +1,5 @@
-import { createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import type { App } from 'vue';
-
-import { createRouter, createWebHashHistory } from 'vue-router';
 
 import { createGuard } from './guard/';
 
@@ -9,11 +7,11 @@ import { basicRoutes } from './routes/';
 import { scrollBehavior } from './scrollBehavior';
 import { REDIRECT_NAME } from './constant';
 
-export const historyRouter = createWebHistory();
+export const useRoute = createWebHistory();
 
 // app router
 const router = createRouter({
-  history: historyRouter,
+  history: useRoute,
   routes: basicRoutes as RouteRecordRaw[],
   strict: true,
   scrollBehavior: scrollBehavior,
@@ -21,7 +19,7 @@ const router = createRouter({
 
 // reset router
 export function resetRouter() {
-  const resetWhiteNameList = ['LoginOidc', REDIRECT_NAME];
+  const resetWhiteNameList = [REDIRECT_NAME];
   router.getRoutes().forEach((route) => {
     const { name } = route;
     if (name && !resetWhiteNameList.includes(name as string)) {
