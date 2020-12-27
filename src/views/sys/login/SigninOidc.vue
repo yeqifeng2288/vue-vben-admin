@@ -4,7 +4,7 @@
 
 <script>
 import { defineComponent, inject } from 'vue';
-import { OpenIdConnectService } from '/@/oidc/openIdConnectService';
+import { OpenIdConnectService } from '/@/modules/sys/login/openIdConnectService';
 import { useRouter } from 'vue-router';
 import { PageEnum } from '/@/enums/pageEnum';
 import { RoleEnum } from '/@/enums/roleEnum';

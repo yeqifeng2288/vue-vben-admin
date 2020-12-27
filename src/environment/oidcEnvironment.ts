@@ -13,5 +13,6 @@ export const oidcEnvironment: UserManagerSettings = {
   silent_redirect_uri: `${reinventAppBase}/redirect-silentrenew`,
   scope: `email openid profile role phone address AppCore`,
   response_type: 'id_token token',
+  post_logout_redirect_uri: 'http://localhost:3200',
   automaticSilentRenew: true,
 };

@@ -92,8 +92,8 @@ export function clearSession(immediate = false) {
 }
 
 export function clearAll() {
-  clearLocal();
-  clearSession();
+  clearLocal(true);
+  clearSession(true);
 }
 
 export function persistentCache() {

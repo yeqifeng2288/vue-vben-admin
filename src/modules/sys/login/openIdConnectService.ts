@@ -1,5 +1,5 @@
 import { User, UserManager } from 'oidc-client';
-import { oidcEnvironment } from '../environment/oidcEnvironment';
+import { oidcEnvironment } from '/@/environment/oidcEnvironment';
 import { ReplaySubject } from 'rxjs';
 import { userStore } from '/@/store/modules/user';
 import { GetUserInfoByUserIdModel, RoleInfo } from '/@/api/sys/model/userModel';

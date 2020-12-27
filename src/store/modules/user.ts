@@ -18,10 +18,11 @@ import router from '/@/router';
 
 import { loginApi, getUserInfoById } from '/@/api/sys/user';
 
-import { setLocal, getLocal, getSession, setSession } from '/@/utils/helper/persistent';
+import { setLocal, getLocal, getSession, setSession, clearAll } from '/@/utils/helper/persistent';
 import { useProjectSetting } from '/@/hooks/setting';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
+import { OpenIdConnectService } from '/@/modules/sys/login/openIdConnectService';
 
 export type UserInfo = Omit<GetUserInfoByUserIdModel, 'roles'>;
 
@@ -66,11 +67,15 @@ class User extends VuexModule {
     return this.roleListState.length > 0 ? this.roleListState : getCache<RoleEnum[]>(ROLES_KEY);
   }
 
+  /**
+   * @description: 重置登录状态。
+   */
   @Mutation
   commitResetState(): void {
     this.userInfoState = null;
     this.tokenState = '';
     this.roleListState = [];
+    clearAll();
   }
 
   @Mutation
@@ -136,7 +141,10 @@ class User extends VuexModule {
    */
   @Action
   async loginOut(goLogin = false) {
-    goLogin && router.push(PageEnum.BASE_LOGIN);
+    userStore.getTokenState;
+    this.commitResetState();
+    await new OpenIdConnectService().triggerSignOut();
+    goLogin && router.push(PageEnum.BASE_HOME);
   }
 
   /**
