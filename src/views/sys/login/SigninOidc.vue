@@ -21,7 +21,7 @@ export default defineComponent({
         router.push(PageEnum.BASE_HOME);
       } else {
         console.log('error login 登录未完成');
-        router.push(PageEnum.BASE_LOGIN);
+        router.push(PageEnum.BASE_LOGINOIDC);
       }
     });
 

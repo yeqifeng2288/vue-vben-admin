@@ -61,7 +61,7 @@ export class OpenIdConnectService {
         console.log(err);
       });
 
-    console.log('handleCallBack');
+    console.log('handleCallBack2');
   }
 
   handleSilentCallback() {

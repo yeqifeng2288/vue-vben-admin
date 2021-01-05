@@ -7,7 +7,7 @@ import { basicRoutes } from './routes/';
 import { scrollBehavior } from './scrollBehavior';
 import { REDIRECT_NAME } from './constant';
 
-export const useRoute = createWebHashHistory();
+export const useRoute = createWebHistory();
 
 // app router
 const router = createRouter({
