@@ -48,7 +48,10 @@ async function getAsyncMenus() {
 export const getMenus = async (): Promise<Menu[]> => {
   const menus = await getAsyncMenus();
   const routes = router.getRoutes();
-  return !isBackMode() ? filter(menus, basicFilter(routes)) : menus;
+
+  // 此处过滤没有注册的路由。
+  var filterResult = filter(menus, basicFilter(routes));
+  return !isBackMode() ? filterResult : menus;
 };
 
 // 获取当前路径的顶级路径
