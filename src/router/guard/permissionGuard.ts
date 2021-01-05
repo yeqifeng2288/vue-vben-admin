@@ -50,6 +50,7 @@ export function createPermissionGuard(router: Router) {
           redirect: to.path,
         };
       }
+
       next(redirectData);
       return;
     }

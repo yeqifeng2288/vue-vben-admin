@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, createWebHashHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import type { App } from 'vue';
 
 import { createGuard } from './guard/';
@@ -7,7 +7,7 @@ import { basicRoutes } from './routes/';
 import { scrollBehavior } from './scrollBehavior';
 import { REDIRECT_NAME } from './constant';
 
-export const useRoute = createWebHashHistory();
+export const useRoute = createWebHistory();
 
 // app router
 const router = createRouter({
