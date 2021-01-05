@@ -3,6 +3,7 @@ import type { AppRouteRecordRaw, AppRouteModule } from '/@/router/types';
 import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '../constant';
 
 import modules from 'globby!/@/router/routes/modules/**/*.@(ts)';
+import { mainOutRoutes } from './mainOut';
 import { PageEnum } from '/@/enums/pageEnum';
 
 import { t } from '/@/hooks/web/useI18n';
@@ -49,11 +50,18 @@ export const LoginOidcRoute: AppRouteRecordRaw = {
 export const SiginOidcRoute: AppRouteRecordRaw = {
   path: '/signin-oidc',
   name: 'SigninOidc',
-  component: () => SigninOidc,
+  component: SigninOidc,
   meta: {
     title: t('routes.basic.siginoidc'),
   },
 };
 
 // 基础路由 不用权限
-export const basicRoutes = [SiginOidcRoute, LoginOidcRoute, LoginRoute, RootRoute, REDIRECT_ROUTE];
+export const basicRoutes = [
+  SiginOidcRoute,
+  LoginOidcRoute,
+  LoginRoute,
+  RootRoute,
+  ...mainOutRoutes,
+  REDIRECT_ROUTE,
+];

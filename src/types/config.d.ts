@@ -1,4 +1,4 @@
-import { MenuTypeEnum, MenuModeEnum, TriggerEnum } from '/@/enums/menuEnum';
+import { MenuTypeEnum, MenuModeEnum, TriggerEnum, MixSidebarTriggerEnum } from '/@/enums/menuEnum';
 import { ContentEnum, PermissionModeEnum, ThemeEnum, RouterTransitionEnum } from '/@/enums/appEnum';
 import { CacheTypeEnum } from '/@/enums/cacheEnum';
 import type { LocaleType } from '/@/locales/types';
@@ -7,7 +7,6 @@ export interface MenuSetting {
   bgColor: string;
   fixed: boolean;
   collapsed: boolean;
-  collapsedShowTitle: boolean;
   canDrag: boolean;
   show: boolean;
   hidden: boolean;
@@ -19,6 +18,10 @@ export interface MenuSetting {
   topMenuAlign: 'start' | 'center' | 'end';
   trigger: TriggerEnum;
   accordion: boolean;
+  closeMixSidebarOnChange: boolean;
+  collapsedShowTitle: boolean;
+  mixSideTrigger: MixSidebarTriggerEnum;
+  mixSideFixed: boolean;
 }
 
 export interface MultiTabsSetting {
@@ -109,6 +112,7 @@ export interface ProjectConfig {
   // pageLayout是否开启keep-alive
   openKeepAlive: boolean;
 
+  //
   // 锁屏时间
   lockTime: number;
   // 显示面包屑

@@ -111,11 +111,12 @@ class User extends VuexModule {
       const data = await loginApi(loginParams, mode);
 
       const { token, userId } = data;
-      // get user info
-      const userInfo = await this.getUserInfoAction({ userId });
 
       // save token
       this.commitTokenState(token);
+
+      // get user info
+      const userInfo = await this.getUserInfoAction({ userId });
 
       // const name = FULL_PAGE_NOT_FOUND_ROUTE.name;
       // name && router.removeRoute(name);
@@ -176,11 +177,11 @@ class User extends VuexModule {
   ): void {
     try {
       //  将信息直接设置到缓存中。
-      var { role } = userInfo;
+      const { role } = userInfo;
       const roleList = [role?.value] as RoleEnum[];
       this.commitUserInfoState(userInfo);
       this.commitRoleListState(roleList);
-      var userToken = userInfo.userToken;
+      const userToken = userInfo.userToken;
       if (userToken) this.commitTokenState(userToken);
     } catch (error) {
       console.log(error);

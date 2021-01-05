@@ -12,7 +12,8 @@ export default {
   menuTriggerTop: 'Top',
   // menu type
   menuTypeSidebar: 'Left menu mode',
-  menuTypeMix: 'Mixed mode',
+  menuTypeMixSidebar: 'Left menu mixed mode',
+  menuTypeMix: 'Top Menu Mix mode',
   menuTypeTopMenu: 'Top menu mode',
 
   on: 'On',
@@ -35,6 +36,7 @@ export default {
   interfaceDisplay: 'Interface display',
   animation: 'Animation',
   splitMenu: 'Split menu',
+  closeMixSidebarOnChange: 'Switch page to close menu',
 
   headerTheme: 'Header theme',
   sidebarTheme: 'Menu theme',
@@ -71,4 +73,10 @@ export default {
 
   fixedHeader: 'Fixed header',
   fixedSideBar: 'Fixed Sidebar',
+
+  mixSidebarTrigger: 'Mixed menu Trigger',
+  triggerHover: 'Hover',
+  triggerClick: 'Click',
+
+  mixSidebarFixed: 'Fixed expanded menu',
 };

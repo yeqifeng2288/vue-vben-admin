@@ -12,5 +12,5 @@ export enum PageEnum {
   // error page path
   ERROR_PAGE = '/exception',
   // error log page path
-  ERROR_LOG_PAGE = '/exception/error-log',
+  ERROR_LOG_PAGE = '/feat/error-log',
 }
