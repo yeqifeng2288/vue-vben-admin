@@ -1,5 +1,4 @@
 import { getI18n } from '/@/setup/i18n';
-import projectSetting from '/@/settings/projectSetting';
 
 export function useI18n(namespace?: string) {
   function getKey(key: string) {
@@ -17,7 +16,7 @@ export function useI18n(namespace?: string) {
     },
   };
 
-  if (!projectSetting.locale.show || !getI18n()) {
+  if (!getI18n()) {
     return normalFn;
   }
 
@@ -25,7 +24,7 @@ export function useI18n(namespace?: string) {
 
   return {
     ...methods,
-    t: (key: string, ...arg: any) => {
+    t: (key: string, ...arg: any): string => {
       if (!key) return '';
       return t(getKey(key), ...(arg as Parameters<typeof t>));
     },
