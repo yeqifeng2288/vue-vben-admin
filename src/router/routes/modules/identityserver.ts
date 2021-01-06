@@ -7,12 +7,21 @@ const identityserver: AppRouteModule = {
   path: '/identityserver',
   name: 'IdentityServer',
   component: LAYOUT,
-  children: [],
-  redirect: '/identityserver/manage',
+  redirect: '/identityserver/clientmanage',
   meta: {
     icon: '',
-    title: t('routes.identityserver.manage'),
+    title: t('routes.identityserver.index'),
   },
+  children: [
+    {
+      path: 'clientmanage',
+      name: t('routes.identityserver.clientmanage'),
+      component: () => import('/@/views/identityserver/client-manage/ClientManage.vue'),
+      meta: {
+        title: t('routes.identityserver.clientmanage'),
+      },
+    },
+  ],
 };
 
 export default identityserver;

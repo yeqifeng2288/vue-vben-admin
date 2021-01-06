@@ -1,3 +1,4 @@
 export default {
-  manage: 'IDS4管理',
+  index: 'IDS4管理',
+  clientmanage: '客户端管理',
 };
