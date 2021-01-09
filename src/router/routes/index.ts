@@ -8,9 +8,6 @@ import { PageEnum } from '/@/enums/pageEnum';
 
 import { t } from '/@/hooks/web/useI18n';
 
-import SigninOidc from '/@/views/sys/login/SigninOidc.vue';
-import LoginOidc from '/@/views/sys/login/LoginOidc.vue';
-
 const routeModuleList: AppRouteModule[] = [];
 
 Object.keys(modules).forEach((key) => {
@@ -41,7 +38,7 @@ export const LoginRoute: AppRouteRecordRaw = {
 export const LoginOidcRoute: AppRouteRecordRaw = {
   path: '/login-oidc',
   name: 'LoginOidc',
-  component: LoginOidc,
+  component: () => import('/@/views/sys/login/LoginOidc.vue'),
   meta: {
     title: t('routes.basic.login'),
   },
@@ -50,9 +47,18 @@ export const LoginOidcRoute: AppRouteRecordRaw = {
 export const SiginOidcRoute: AppRouteRecordRaw = {
   path: '/signin-oidc',
   name: 'SigninOidc',
-  component: SigninOidc,
+  component: () => import('/@/views/sys/login/SigninOidc.vue'),
   meta: {
     title: t('routes.basic.siginoidc'),
+  },
+};
+
+export const RedirectSilentRenewRoute: AppRouteRecordRaw = {
+  path: '/redirect-silentrenew',
+  name: 'RedirectSilentRenew',
+  component: () => import('/@/views/sys/login/RedirectSilentRenew.vue'),
+  meta: {
+    title: t('routes.basic.redirectsilentrenew'),
   },
 };
 
@@ -62,6 +68,7 @@ export const basicRoutes = [
   LoginOidcRoute,
   LoginRoute,
   RootRoute,
+  RedirectSilentRenewRoute,
   ...mainOutRoutes,
   REDIRECT_ROUTE,
 ];

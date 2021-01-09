@@ -18,6 +18,20 @@ export class OpenIdConnectService {
     return this.currentUser;
   }
 
+  private setUser(user: User | null): User | null {
+    this.currentUser = user;
+    if (user) {
+      console.log('加载用户', user);
+      this.userLoaded = true;
+      userStore.commitUserAccessToken(user.access_token);
+      userStore.commitCurrentUser(user);
+    } else {
+      this.userLoaded = false;
+    }
+
+    return this.currentUser;
+  }
+
   private buildUserInfo(): GetUserInfoByUserIdModel {
     let roles: RoleInfo = {
       roleName: 'super',
@@ -47,17 +61,15 @@ export class OpenIdConnectService {
       .signinRedirectCallback()
       .then((user) => {
         console.log('handleCallBack');
-        this.currentUser = user;
-        this.userLoaded = true;
+        this.setUser(user);
         var userInfo = this.buildUserInfo();
-        let sub = this.currentUser.profile.sub;
+        let sub = this.setUser(user)?.profile.sub;
         if (sub) {
           userStore.loginOidc(userInfo);
           console.log('登录成功', sub);
         }
       })
       .catch((err) => {
-        console.log(222222222);
         console.log(err);
       });
 
@@ -65,53 +77,62 @@ export class OpenIdConnectService {
   }
 
   handleSilentCallback() {
-    this.userManager.signinSilentCallback().then((user) => {
-      if (user) {
-        this.currentUser = user;
-      }
-      console.log('自动刷新token');
-    });
+    this.userManager
+      .signinSilentCallback()
+      .then((user) => {
+        console.log('sucessful for renew access token', user);
+      })
+      .catch((err) => {
+        console.log('刷新token错误!', err);
+      });
   }
 
   triggerSignOut() {
     this.userManager.signoutRedirect().then((res) => {
-      console.log('用户登出');
+      console.log('用户登出', res);
     });
   }
 
   constructor() {
-    this.currentUser = null;
-    this.userLoaded = false;
+    this.currentUser = userStore.getCurrentUser;
+    if (this.currentUser) this.userLoaded = true;
+    else this.userLoaded = false;
+
     this.userManager.clearStaleState();
 
-    this.userManager.events.addUserLoaded(() => {});
+    this.userManager.events.addUserLoaded((user) => {
+      this.setUser(user);
+      console.log('用户已加载', user);
+    });
 
     this.userManager
       .getUser()
       .then((user) => {
         if (user) {
-          this.currentUser = user;
           this.userLoaded$.next(true);
         } else {
-          this.currentUser = null;
           this.userLoaded$.next(false);
         }
       })
       .catch((err) => {
-        this.currentUser = null;
+        console.log(err);
         this.userLoaded$.next(false);
       });
 
     this.userManager.events.addUserLoaded((user) => {
       console.log('user loaded:', user);
-      this.currentUser = user;
+      this.setUser(user);
       this.userLoaded$.next(true);
     });
 
     this.userManager.events.addUserUnloaded((user: void) => {
       console.log('user unloaded', user);
-      this.currentUser = null;
+      this.setUser(null);
       this.userLoaded$.next(false);
+    });
+
+    this.userManager.events.addAccessTokenExpired((user) => {
+      console.log('User access token expired:', user);
     });
   }
 }

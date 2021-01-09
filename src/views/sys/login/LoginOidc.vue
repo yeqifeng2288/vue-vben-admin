@@ -10,8 +10,7 @@ import { OpenIdConnectService } from '/@/modules/sys/login/openIdConnectService'
 export default defineComponent({
   name: 'LoginOidc',
   setup() {
-    const oidcServer = new OpenIdConnectService();
-    oidcServer.triggerSignIn();
+    new OpenIdConnectService().triggerSignIn();
     return {};
   },
 });

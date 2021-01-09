@@ -10,12 +10,18 @@ import { hotModuleUnregisterModule } from '/@/utils/helper/vuexHelper';
 
 import { PageEnum } from '/@/enums/pageEnum';
 import { RoleEnum } from '/@/enums/roleEnum';
-import { CacheTypeEnum, ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
+import {
+  ACCESS_TOKEN,
+  CacheTypeEnum,
+  OIDC_USER_KEY,
+  ROLES_KEY,
+  TOKEN_KEY,
+  USER_INFO_KEY,
+} from '/@/enums/cacheEnum';
 
 import { useMessage } from '/@/hooks/web/useMessage';
 
 import router from '/@/router';
-
 import { loginApi, getUserInfoById } from '/@/api/sys/user';
 
 import { setLocal, getLocal, getSession, setSession, clearAll } from '/@/utils/helper/persistent';
@@ -23,6 +29,7 @@ import { useProjectSetting } from '/@/hooks/setting';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
 import { OpenIdConnectService } from '/@/modules/sys/login/openIdConnectService';
+import Oidc from 'oidc-client';
 
 export type UserInfo = Omit<GetUserInfoByUserIdModel, 'roles'>;
 
@@ -49,11 +56,20 @@ class User extends VuexModule {
   // user info
   private userInfoState: UserInfo | null = null;
 
+  private currentUser: Oidc.User | null = null;
+
   // token
   private tokenState = '';
 
+  private accessToken = '';
+
   // roleList
   private roleListState: RoleEnum[] = [];
+
+  // accessToken。
+  get getUserAccessToken(): string {
+    return this.accessToken || getCache<string>(ACCESS_TOKEN);
+  }
 
   get getUserInfoState(): UserInfo {
     return this.userInfoState || getCache<UserInfo>(USER_INFO_KEY) || {};
@@ -65,6 +81,10 @@ class User extends VuexModule {
 
   get getRoleListState(): RoleEnum[] {
     return this.roleListState.length > 0 ? this.roleListState : getCache<RoleEnum[]>(ROLES_KEY);
+  }
+
+  get getCurrentUser(): Oidc.User {
+    return this.currentUser || getCache<Oidc.User>(OIDC_USER_KEY);
   }
 
   /**
@@ -82,6 +102,24 @@ class User extends VuexModule {
   commitUserInfoState(info: UserInfo): void {
     this.userInfoState = info;
     setCache(USER_INFO_KEY, info);
+  }
+
+  @Mutation
+  commitCurrentUser(user: Oidc.User) {
+    this.currentUser = user;
+    setCache(OIDC_USER_KEY, user);
+  }
+
+  /**
+   *
+   * @param accessToken 访问Token
+   * @description 设置用户的访问Token。
+   */
+  @Mutation
+  commitUserAccessToken(accessToken: string): void {
+    this.accessToken = accessToken;
+    console.log('access token was changed');
+    setCache(ACCESS_TOKEN, accessToken);
   }
 
   @Mutation

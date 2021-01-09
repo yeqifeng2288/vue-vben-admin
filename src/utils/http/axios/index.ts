@@ -193,7 +193,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 默认将prefix 添加到url
           joinPrefix: true,
           // 需要对返回数据进行处理
-          isTransformRequestResult: true,
+          isTransformRequestResult: false,
           // post请求的时候添加参数到url
           joinParamsToUrl: false,
           // 格式化提交参数时间
