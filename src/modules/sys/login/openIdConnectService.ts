@@ -133,6 +133,7 @@ export class OpenIdConnectService {
 
     this.userManager.events.addAccessTokenExpired((user) => {
       console.log('User access token expired:', user);
+      this.handleSilentCallback();
     });
   }
 }

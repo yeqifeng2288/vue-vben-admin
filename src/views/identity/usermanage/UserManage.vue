@@ -2,6 +2,7 @@
   <BasicTable
     title="用户管理"
     titleHelpMessage="管理用户信息"
+    @register="registerTable"
     :columns="columns"
     :dataSource="data"
     :canResize="canResize"
@@ -34,17 +35,32 @@
         {{ !striped ? '显示斑马纹' : '隐藏斑马纹' }}
       </a-button>
     </template>
+    <template #action="{ record, column }">
+      <TableAction
+        :actions="createBaseActions(record, column)"
+        :dropDownActions="createActions(record, column)"
+      />
+    </template>
   </BasicTable>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { BasicTable } from '/@/components/Table';
+import {
+  BasicTable,
+  useTable,
+  TableAction,
+  BasicColumn,
+  ActionItem,
+  EditTableHeaderIcon,
+  EditRecordRow,
+} from '/@/components/Table';
+
 import { getUserManageColumns } from './usertable';
 import { getAllUserData } from './userData';
 
 export default defineComponent({
   name: 'UserManage',
-  components: { BasicTable },
+  components: { BasicTable, EditTableHeaderIcon, TableAction },
   setup() {
     const data = ref([]);
     const columns = getUserManageColumns();
@@ -74,6 +90,76 @@ export default defineComponent({
     function toggleBorder() {
       border.value = !border.value;
     }
+
+    const currentEditKeyRef = ref('');
+    function handleEdit(record: EditRecordRow) {
+      console.log('啊你点击了');
+      currentEditKeyRef.value = record.key;
+      record.onEdit?.(true);
+    }
+
+    function handleCancel(record: EditRecordRow) {
+      currentEditKeyRef.value = '';
+      record.onEdit?.(false, true);
+    }
+
+    async function handleSave(record: EditRecordRow) {
+      const pass = await record.onEdit?.(false, true);
+      if (pass) {
+        currentEditKeyRef.value = '';
+      }
+    }
+
+    const [registerTable] = useTable({
+      title: '可编辑行示例',
+      // api: demoListApi,
+      columns: columns,
+      showIndexColumn: false,
+      actionColumn: {
+        width: 160,
+        title: '操作',
+        dataIndex: 'action',
+        slots: { customRender: 'action' },
+      },
+    });
+
+    function createBaseActions(record: EditRecordRow, column: BasicColumn): ActionItem[] {
+      console.log(column.title);
+      return [
+        {
+          label: '编辑',
+          disabled: currentEditKeyRef.value ? currentEditKeyRef.value !== record.key : false,
+          onClick: handleEdit.bind(null, record),
+        },
+      ];
+    }
+
+    function createActions(record: EditRecordRow, column: BasicColumn): ActionItem[] {
+      // if (!record.editable) {
+      //   return [
+      //     {
+      //       label: '编辑',
+      //       disabled: currentEditKeyRef.value ? currentEditKeyRef.value !== record.key : false,
+      //       onClick: handleEdit.bind(null, record),
+      //     },
+      //   ];
+      // }
+
+      return [
+        {
+          label: '保存',
+          onClick: handleSave.bind(null, record, column),
+        },
+        {
+          label: '取消',
+          popConfirm: {
+            title: '是否取消编辑',
+            confirm: handleCancel.bind(null, record, column),
+          },
+        },
+      ];
+    }
+
     return {
       columns,
       data,
@@ -86,6 +172,9 @@ export default defineComponent({
       toggleStriped,
       toggleLoading,
       toggleBorder,
+      createActions,
+      createBaseActions,
+      registerTable,
     };
   },
 });
