@@ -50,7 +50,7 @@ export const getMenus = async (): Promise<Menu[]> => {
   const routes = router.getRoutes();
 
   // 此处过滤没有注册的路由。
-  var filterResult = filter(menus, basicFilter(routes));
+  const filterResult = filter(menus, basicFilter(routes));
   return !isBackMode() ? filterResult : menus;
 };
 
