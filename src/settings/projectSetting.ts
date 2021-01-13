@@ -76,7 +76,7 @@ const setting: ProjectConfig = {
   // Menu configuration
   menuSetting: {
     // sidebar menu bg color
-    bgColor: '#273352',
+    bgColor: '#001529',
     //  Whether to fix the left menu
     fixed: true,
     // Menu collapse
@@ -85,7 +85,7 @@ const setting: ProjectConfig = {
     collapsedShowTitle: false,
     // Whether it can be dragged
     // Only limited to the opening of the left menu, the mouse has a drag bar on the right side of the menu
-    canDrag: true,
+    canDrag: false,
     // Whether to show no dom
     show: true,
     // Whether to show dom
@@ -125,6 +125,8 @@ const setting: ProjectConfig = {
 
     // Whether to show the refresh button
     showRedo: true,
+    // Whether to show the collapse button
+    showFold: true,
   },
 
   // Transition Setting
@@ -170,7 +172,7 @@ const setting: ProjectConfig = {
 
   // Whether to cancel the http request that has been sent but not responded when switching the interface.
   // If it is enabled, I want to overwrite a single interface. Can be set in a separate interface
-  removeAllHttpPending: true,
+  removeAllHttpPending: false,
 };
 
 export default setting;

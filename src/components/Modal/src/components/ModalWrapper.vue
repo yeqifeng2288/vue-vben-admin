@@ -1,5 +1,5 @@
 <template>
-  <ScrollContainer ref="wrapperRef" :style="wrapStyle">
+  <ScrollContainer ref="wrapperRef">
     <div ref="spinRef" :style="spinStyle" v-loading="loading" :loading-tip="loadingTip">
       <slot />
     </div>
@@ -31,6 +31,7 @@
 
   export default defineComponent({
     name: 'ModalWrapper',
+    inheritAttrs: false,
     components: { Spin, ScrollContainer },
     props: {
       loading: propTypes.bool,
@@ -51,6 +52,8 @@
       const realHeightRef = ref(0);
       const minRealHeightRef = ref(0);
 
+      let realHeight = 0;
+
       let stopElResizeFn: Fn = () => {};
 
       useWindowSizeFn(setModalHeight);
@@ -59,21 +62,12 @@
         redoModalHeight: setModalHeight,
       });
 
-      const wrapStyle = computed(
-        (): CSSProperties => {
-          return {
-            minHeight: `${props.minHeight}px`,
-            height: `${unref(realHeightRef)}px`,
-            // overflow: 'auto',
-          };
-        }
-      );
-
       const spinStyle = computed(
         (): CSSProperties => {
           return {
+            minHeight: `${props.minHeight}px`,
             // padding 28
-            height: `${unref(realHeightRef) - 28}px`,
+            height: `${unref(realHeightRef)}px`,
           };
         }
       );
@@ -136,8 +130,10 @@
           const spinEl = unref(spinRef);
 
           if (!spinEl) return;
-
-          const realHeight = spinEl.scrollHeight;
+          await nextTick();
+          // if (!realHeight) {
+          realHeight = spinEl.scrollHeight;
+          // }
 
           if (props.fullScreen) {
             realHeightRef.value =
@@ -147,7 +143,7 @@
               ? props.height
               : realHeight > maxHeight
               ? maxHeight
-              : realHeight + 16 + 30;
+              : realHeight;
           }
           emit('height-change', unref(realHeightRef));
         } catch (error) {
@@ -155,7 +151,7 @@
         }
       }
 
-      return { wrapStyle, wrapperRef, spinRef, spinStyle };
+      return { wrapperRef, spinRef, spinStyle };
     },
   });
 </script>

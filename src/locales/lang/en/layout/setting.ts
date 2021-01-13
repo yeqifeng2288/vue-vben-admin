@@ -26,7 +26,6 @@ export default {
   resetSuccess: 'Successfully reset!',
 
   copyBtn: 'Copy',
-  resetBtn: 'Reset',
   clearBtn: 'Clear cache and to the login page',
 
   drawerTitle: 'Configuration',
@@ -56,6 +55,7 @@ export default {
   tabs: 'Tabs',
   tabsQuickBtn: 'Tabs quick button',
   tabsRedoBtn: 'Tabs redo button',
+  tabsFoldBtn: 'Tabs flod button',
   sidebar: 'Sidebar',
   header: 'Header',
   footer: 'Footer',
